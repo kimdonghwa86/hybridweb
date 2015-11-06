@@ -5,22 +5,33 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class HibridWebActivity extends Activity {
+public class HibridWebActivity extends Activity implements OnClickListener   {     
 	
-	WebView myweb; // 웹뷰선언
+	Button btnWeb80;
+	Button btnWeb8080;
+	
+	WebView myweb; 													// 웹뷰선언
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hibrid_web);
+		
+		btnWeb80 = (Button) findViewById(R.id.btnWeb80);
+		btnWeb8080 = (Button) findViewById(R.id.btnWeb8080);
+		btnWeb80.setOnClickListener(this);
+		btnWeb8080.setOnClickListener(this);
 		
 		myweb = (WebView) findViewById(R.id.myweb);
 		
@@ -31,9 +42,9 @@ public class HibridWebActivity extends Activity {
 		myweb.setWebViewClient(new MyWebViewClient()); 				 //a href 별도웹브라우저가 뜨지 않게함.
 		myweb.setWebChromeClient(new WebChromeClient()); //alert()
 		
-		myweb.loadUrl("http://192.168.10.28:8080/web/index.jsp");
+		//myweb.loadUrl("http://192.168.10.28:8080/web/index.jsp");
 		//myweb.loadUrl("http://localhost");
-		//myweb.loadUrl("http://www.soen.kr");
+		myweb.loadUrl("http://www.soen.kr");
 	}
 	
 	class MyJavascriptInterface {
@@ -72,4 +83,19 @@ public class HibridWebActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	public void onClick(View v) {
+		switch (v.getId()){
+		case R.id.btnWeb80:
+			myweb.loadUrl("http://192.168.10.28");
+			break;
+		case R.id.btnWeb8080:
+			myweb.loadUrl("http://192.168.10.28:8080/web");
+		break;	
+		
+		default:
+				break;
+		}
+	}
+	
 }
